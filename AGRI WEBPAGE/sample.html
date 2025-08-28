@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Forecast for Farmers</title>
+    <style>
+        body {
+            background: linear-gradient(to bottom, #f0f8ff, #e6f7ff);
+            color: #333;
+        }
+        h1, h2 {
+            color: #00509e;
+            text-align: center;
+        }
+        .form-container {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .form-container label {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .form-container input, .form-container select, .form-container button {
+            padding: 8px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .form-container button {
+            background-color: #00509e;
+            color: white;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            max-width: 100px;
+            text-align: center;
+        }
+        .form-container button:hover {
+            background-color: #003f7f;
+        }
+        .crop-item {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+        .crop-item:hover {
+            transform: scale(1.05);
+        }
+        .crop-item img {
+            border-radius: 50%;
+            border: 2px solid #00509e;
+        }
+        #crop-details img {
+            border-radius: 8px;
+            border: 3px solid #00509e;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .form-container {
+            margin-bottom: 20px;
+        }
+        .crop-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-left: 90px;
+        }
+        .crop-item {
+            border: 1px solid #ccc;
+            padding: 10px;
+            width: 300px;
+            display: flex;
+            align-items: center;
+        }
+        .crop-item img {
+            width: 80px;
+            height: 80px;
+            margin-right: 10px;
+        }
+        .crop-details {
+            flex: 1;
+        }
+        .crop-details h3 {
+            margin: 0;
+        }
+        .crop-details p {
+            margin: 5px 0;
+        }
+        .form-container {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+            }
+
+        .form-container label, .form-container select{
+                width: 100%;
+                max-width: 300px;
+                text-align: center;
+            }
+    </style>
+</head>
+<body>
+    <h1>Crop Forecast for Farmers</h1>
+    <div class="form-container">
+        <label for="month">Select Month:</label>
+            <select id="month" name="month" required>
+                    <option value="">--Select Month--</option>
+                    <option value="january">January</option>
+                    <option value="february">February</option>
+                    <option value="March">March</option>
+                    <option value="April">April</option>
+                    <option value="May">May</option>
+                    <option value="June">June</option>
+                    <option value="July">July</option>
+                    <option value="August">August</option>
+                    <option value="September">September</option>
+                    <option value="Octocber">Octocber</option>
+                    <option value="November">November</option>
+                    <option value="December">December</option>
+                    <!-- Add all months here -->
+                </select>
+        <label for="district">Select District:</label>
+        <select id="district" name="district" required>
+            <option value="">--Select District--</option>
+           <option value="District 1">Tiruchirappalli திருச்சி</option>
+                    <option value="District 2">Ariyalur அரியலூர்</option>
+                    <option value="District 3">Karur கருர்</option>
+                    <option value="District 4">Nagappattinam நாகப்பட்டினம்</option>
+                    <option value="District 5">Perambalur பெரம்பலூர்</option>
+                    <option value="District 6">Tiruvarur திருவாருர்</option>
+                    <option value="District 7">Pudukkottai புதுக்கோட்டை</option>
+                    <option value="District 8">Thanjavur தஞ்சாவூர்</option>
+                    <option value="District 9">Mayiladuthurai மயிலாடுதுறை</option>
+                    <option value="District 10">Dharmapuri தர்மபுரி</option>
+                    <option value="District 11">Coimbatore கோவை</option>
+                    <option value="District 12">Erode ஈரோடு</option>
+                    <option value="District 13">Krishnagiri கிருஷ்ணகிரி</option>
+                    <option value="District 14">Namakkal நாமக்கல்</option>
+                    <option value="District 15">The Nilgiris நீலகிரி</option>
+                    <option value="District 16">Salem சேலம்</option>
+                    <option value="District 17">Tiruppur திருப்பூர்</option>
+                    <option value="District 18">Dindigul திண்டுக்கல்</option>
+                    <option value="District 19">Kanyakumari கன்னியாகுமரி</option>
+                    <option value="District 20">Madurai மதுரை</option>
+                    <option value="District 21">Ramanathapuram இராமநாதபுரம்</option>
+                    <option value="District 22">Sivagangai சிவகங்கை</option>
+                    <option value="District 23">Theni தேனி</option>
+                    <option value="District 24">Thoothukudi தூத்துக்குடி</option>
+                    <option value="District 25">Tirunelveli திருநெல்வேலி</option>
+                    <option value="District 26">Virudhunagar விருதுநகர்</option>
+                    <option value="District 27">Tenkasi தென்காசி</option>
+                    <option value="District 28">Chennai சென்னை</option>
+                    <option value="District 29">Cuddalore கடலூர்</option>
+                    <option value="District 30">Kanchipuram காஞ்சிபுரம்</option>
+                    <option value="District 31">Chengalpattu செங்கல்பட்டு</option>
+                    <option value="District 32">Tiruvallur திருவள்ளூர்</option>
+                    <option value="District 33">Tiruvannamalai திருவண்ணாமலை</option>
+                    <option value="District 34">Vellore வேலூர்</option>
+                    <option value="District 35">Viluppuram விழுப்புரம்</option>
+                    <option value="District 36">Kallakurichi கள்ளக்குறிச்சி</option>
+                    <option value="District 37">Ranipet ராணிபேட்டை</option>
+                    <option value="district2">Thirupattur திருப்பத்தூர்</option>
+            <!-- Add more districts as needed -->
+        </select>
+        <button onclick="showForecast()">Forecast</button>
+    </div>
+
+    <div id="forecast-section" style="display: none;">
+        <h2>Demanded Crops</h2>
+        <div class="crop-list" id="crop-list">
+            <!-- Crop items will be dynamically added here -->
+        </div>
+    </div>
+
+    <div id="crop-details-section" style="display: none;">
+        <h2>Crop Details</h2>
+        <div id="crop-details">
+            <!-- Crop details will be dynamically added here -->
+        </div>
+    </div>
+
+    <script>
+        const crops = [
+            {
+                name: "Rice – அரிசி / நெல்",
+                image: "rice.jpg",
+                demand: "200 loads",
+                details: "Rice is forecasted based on demand in Chennai, Coimbatore, and Madurai. Total demand is 200 loads.",
+                distribution: "Chennai: 80 loads, Coimbatore: 70 loads, Madurai: 50 loads"
+            },
+            {
+                name: "Maize – சோளம்",
+                image: "maize.jpg",
+                demand: "200 loads",
+                details: "Rice is forecasted based on demand in Chennai, Coimbatore, and Madurai. Total demand is 200 loads.",
+                distribution: "Chennai: 80 loads, Coimbatore: 70 loads, Madurai: 50 loads"
+            },
+            {
+                name: "Pearl Millet – கம்பு",
+                image: "Pearl Millet.jpg",
+                demand: "200 loads",
+                details: "Rice is forecasted based on demand in Chennai, Coimbatore, and Madurai. Total demand is 200 loads.",
+                distribution: "Chennai: 80 loads, Coimbatore: 70 loads, Madurai: 50 loads"
+            },
+            {
+                name: "Finger Millet – கேழ்வரகு",
+                image: "Finger Millet.jpg",
+                demand: "200 loads",
+                details: "Rice is forecasted based on demand in Chennai, Coimbatore, and Madurai. Total demand is 200 loads.",
+                distribution: "Chennai: 80 loads, Coimbatore: 70 loads, Madurai: 50 loads"
+            },
+            {
+                name: "Sorghum – சோளம்",
+                image: "Sorghum.jpg",
+                demand: "200 loads",
+                details: "Rice is forecasted based on demand in Chennai, Coimbatore, and Madurai. Total demand is 200 loads.",
+                distribution: "Chennai: 80 loads, Coimbatore: 70 loads, Madurai: 50 loads"
+            },
+            {
+                name: "Wheat – கோதுமை",
+                image: "Wheat.jpg",
+                demand: "200 loads",
+                details: "Rice is forecasted based on demand in Chennai, Coimbatore, and Madurai. Total demand is 200 loads.",
+                distribution: "Chennai: 80 loads, Coimbatore: 70 loads, Madurai: 50 loads"
+            },
+            {
+                name: "Red Gram – துவரம் பருப்பு",
+                image: "Red Gram.jpg",
+                demand: "200 loads",
+                details: "Rice is forecasted based on demand in Chennai, Coimbatore, and Madurai. Total demand is 200 loads.",
+                distribution: "Chennai: 80 loads, Coimbatore: 70 loads, Madurai: 50 loads"
+            },
+            {
+                name: "Black Gram – உளுந்து",
+                image: "Black Gram.jpg",
+                demand: "200 loads",
+                details: "Rice is forecasted based on demand in Chennai, Coimbatore, and Madurai. Total demand is 200 loads.",
+                distribution: "Chennai: 80 loads, Coimbatore: 70 loads, Madurai: 50 loads"
+            },
+            {
+                name: "Green Gram – பாசி பருப்பு",
+                image: "Green Gram.jpg",
+                demand: "200 loads",
+                details: "Rice is forecasted based on demand in Chennai, Coimbatore, and Madurai. Total demand is 200 loads.",
+                distribution: "Chennai: 80 loads, Coimbatore: 70 loads, Madurai: 50 loads"
+            },
+            {
+                name: "Horse Gram – கொள்ளு",
+                image: "Horse Gram.jpeg",
+                demand: "200 loads",
+                details: "Rice is forecasted based on demand in Chennai, Coimbatore, and Madurai. Total demand is 200 loads.",
+                distribution: "Chennai: 80 loads, Coimbatore: 70 loads, Madurai: 50 loads"
+            },
+            {
+                name: "Cowpea – காராமணி",
+                image: "Cowpea.jpg",
+                demand: "200 loads",
+                details: "Rice is forecasted based on demand in Chennai, Coimbatore, and Madurai. Total demand is 200 loads.",
+                distribution: "Chennai: 80 loads, Coimbatore: 70 loads, Madurai: 50 loads"
+            },
+            {
+                name: "Groundnut – நிலக்கடலை",
+                image: "Groundnut.jpg",
+                demand: "200 loads",
+                details: "Rice is forecasted based on demand in Chennai, Coimbatore, and Madurai. Total demand is 200 loads.",
+                distribution: "Chennai: 80 loads, Coimbatore: 70 loads, Madurai: 50 loads"
+            },
+            {
+                name: "Sesame – எள்ளு",
+                image: "Sesame.jpg",
+                demand: "200 loads",
+                details: "Rice is forecasted based on demand in Chennai, Coimbatore, and Madurai. Total demand is 200 loads.",
+                distribution: "Chennai: 80 loads, Coimbatore: 70 loads, Madurai: 50 loads"
+            },
+            {
+                name: "Sunflower – சூரியகாந்தி",
+                image: "Sunflower.jpg",
+                demand: "200 loads",
+                details: "Rice is forecasted based on demand in Chennai, Coimbatore, and Madurai. Total demand is 200 loads.",
+                distribution: "Chennai: 80 loads, Coimbatore: 70 loads, Madurai: 50 loads"
+            },
+            {
+                name: "Castor – ஆமணக்கு",
+                image: "Castor.jpg",
+                demand: "200 loads",
+                details: "Rice is forecasted based on demand in Chennai, Coimbatore, and Madurai. Total demand is 200 loads.",
+                distribution: "Chennai: 80 loads, Coimbatore: 70 loads, Madurai: 50 loads"
+            },
+            {
+                name: "Coconut – தேங்காய்",
+                image: "Coconut.jpg",
+                demand: "200 loads",
+                details: "Rice is forecasted based on demand in Chennai, Coimbatore, and Madurai. Total demand is 200 loads.",
+                distribution: "Chennai: 80 loads, Coimbatore: 70 loads, Madurai: 50 loads"
+            },
+            {
+                name: "Cotton – பருத்தி",
+                image: "Cotton.jpg",
+                demand: "200 loads",
+                details: "Rice is forecasted based on demand in Chennai, Coimbatore, and Madurai. Total demand is 200 loads.",
+                distribution: "Chennai: 80 loads, Coimbatore: 70 loads, Madurai: 50 loads"
+            },
+            {
+                name: "Sugarcane – கரும்பு",
+                image: "Sugarcane.jpg",
+                demand: "200 loads",
+                details: "Rice is forecasted based on demand in Chennai, Coimbatore, and Madurai. Total demand is 200 loads.",
+                distribution: "Chennai: 80 loads, Coimbatore: 70 loads, Madurai: 50 loads"
+            },
+            {
+                name: "Banana – வாழை",
+                image: "Banana.jpg",
+                demand: "200 loads",
+                details: "Rice is forecasted based on demand in Chennai, Coimbatore, and Madurai. Total demand is 200 loads.",
+                distribution: "Chennai: 80 loads, Coimbatore: 70 loads, Madurai: 50 loads"
+            },
+            {
+                name: "Tapioca – மரவள்ளிக்கிழங்கு",
+                image: "Tapioca.jpeg",
+                demand: "200 loads",
+                details: "Rice is forecasted based on demand in Chennai, Coimbatore, and Madurai. Total demand is 200 loads.",
+                distribution: "Chennai: 80 loads, Coimbatore: 70 loads, Madurai: 50 loads"
+            },
+            {
+                name: "Turmeric – மஞ்சள்",
+                image: "Turmeric.jpg",
+                demand: "200 loads",
+                details: "Rice is forecasted based on demand in Chennai, Coimbatore, and Madurai. Total demand is 200 loads.",
+                distribution: "Chennai: 80 loads, Coimbatore: 70 loads, Madurai: 50 loads"
+            },
+            {
+                name: "Chillies – மிளகாய்",
+                image: "Chillies.jpeg",
+                demand: "200 loads",
+                details: "Rice is forecasted based on demand in Chennai, Coimbatore, and Madurai. Total demand is 200 loads.",
+                distribution: "Chennai: 80 loads, Coimbatore: 70 loads, Madurai: 50 loads"
+            },
+            {
+                name: "Pepper – மிளகு",
+                image: "Pepper.jpeg",
+                demand: "200 loads",
+                details: "Rice is forecasted based on demand in Chennai, Coimbatore, and Madurai. Total demand is 200 loads.",
+                distribution: "Chennai: 80 loads, Coimbatore: 70 loads, Madurai: 50 loads"
+            },
+            {
+                name: "Cardamom – ஏலக்காய்",
+                image: "Cardamom.jpg",
+                demand: "200 loads",
+                details: "Rice is forecasted based on demand in Chennai, Coimbatore, and Madurai. Total demand is 200 loads.",
+                distribution: "Chennai: 80 loads, Coimbatore: 70 loads, Madurai: 50 loads"
+            },
+            {
+                name: "Clove – கிராம்பு",
+                image: "Clove.jpg",
+                demand: "200 loads",
+                details: "Rice is forecasted based on demand in Chennai, Coimbatore, and Madurai. Total demand is 200 loads.",
+                distribution: "Chennai: 80 loads, Coimbatore: 70 loads, Madurai: 50 loads"
+            },
+                {
+                name: "Coffee – காபி",
+                image: "Coffee.jpg",
+                demand: "200 loads",
+                details: "Rice is forecasted based on demand in Chennai, Coimbatore, and Madurai. Total demand is 200 loads.",
+                distribution: "Chennai: 80 loads, Coimbatore: 70 loads, Madurai: 50 loads"
+            },
+            {
+                name: "Tea – தேநீர்",
+                image: "Tea.jpg",
+                demand: "150 loads",
+                details: "Wheat is forecasted based on demand in Salem and Tiruchirappalli. Total demand is 150 loads.",
+                distribution: "Salem: 90 loads, Tiruchirappalli: 60 loads"
+            }
+            // Add more crops as needed
+        ];
+
+        function showForecast() {
+            const month = document.getElementById("month").value;
+            const district = document.getElementById("district").value;
+
+            if (!month || !district) {
+                alert("Please select both month and district.");
+                return;
+            }
+
+            const cropList = document.getElementById("crop-list");
+            cropList.innerHTML = "";
+
+            crops.forEach((crop, index) => {
+                const cropItem = document.createElement("div");
+                cropItem.className = "crop-item";
+                cropItem.innerHTML = `
+                    <img src="${crop.image}" alt="${crop.name}">
+                    <div class="crop-details">
+                        <h3>${crop.name}</h3>
+                        <p>Demand: ${crop.demand}</p>
+                        <button onclick="showCropDetails(${index})">View Details</button>
+                    </div>
+                `;
+                cropList.appendChild(cropItem);
+            });
+
+            document.getElementById("forecast-section").style.display = "block";
+            document.getElementById("crop-details-section").style.display = "none";
+        }
+
+        function showCropDetails(index) {
+            const crop = crops[index];
+            const cropDetails = document.getElementById("crop-details");
+            cropDetails.innerHTML = `
+                <img src="${crop.image}" alt="${crop.name}" style="width: 200px; height: 200px;">
+                <h3>${crop.name}</h3>
+                <p>${crop.details}</p>
+                <p><strong>Distribution:</strong> ${crop.distribution}</p>
+            `;
+
+            document.getElementById("forecast-section").style.display = "none";
+            document.getElementById("crop-details-section").style.display = "block";
+        }
+        // Generate random demand for each crop
+        crops.forEach(crop => {
+            crop.demand = `${Math.floor(Math.random() * 1000) + 1} loads`;
+        });
+        document.querySelector("button[onclick='showForecast()']").addEventListener("click", () => {
+            crops.forEach(crop => {
+                crop.demand = `${Math.floor(Math.random() * 1000) + 1} loads`;
+            });
+        });
+        const demandCache = {};
+
+        function generateKey(month, district) {
+            return `${month}-${district}`;
+        }
+
+        function getCachedDemand(month, district) {
+            const key = generateKey(month, district);
+            if (!demandCache[key]) {
+            demandCache[key] = crops.map(() => `${Math.floor(Math.random() * 1000) + 1} loads`);
+            }
+            return demandCache[key];
+        }
+
+        function showForecast() {
+            const month = document.getElementById("month").value;
+            const district = document.getElementById("district").value;
+
+            if (!month || !district) {
+            alert("Please select both month and district.");
+            return;
+            }
+
+            const cropList = document.getElementById("crop-list");
+            cropList.innerHTML = "";
+
+            const cachedDemands = getCachedDemand(month, district);
+
+            crops.forEach((crop, index) => {
+            crop.demand = cachedDemands[index];
+            const cropItem = document.createElement("div");
+            cropItem.className = "crop-item";
+            cropItem.innerHTML = `
+                <img src="${crop.image}" alt="${crop.name}">
+                <div class="crop-details">
+                <h3>${crop.name}</h3>
+                <p>Demand: ${crop.demand}</p>
+                <button onclick="showCropDetails(${index})">View Details</button>
+                </div>
+            `;
+            cropList.appendChild(cropItem);
+            });
+
+            document.getElementById("forecast-section").style.display = "block";
+            document.getElementById("crop-details-section").style.display = "none";
+        }
+        document.getElementById("month").addEventListener("change", showForecast);
+        document.getElementById("district").addEventListener("change", showForecast);
+        document.getElementById("month").removeEventListener("change", showForecast);
+        document.getElementById("district").removeEventListener("change", showForecast);
+        document.getElementById("month").addEventListener("change", () => {
+            demandCache = {march}; // Clear the cache to allow random loads for new month selection
+            showForecast();
+        });
+
+        document.getElementById("district").addEventListener("change", () => {
+            demandCache = {}; // Clear the cache to allow random loads for new district selection
+            showForecast();
+        });
+
+
+        function goBackToForecast() {
+            document.getElementById("forecast-section").style.display = "block";
+            document.getElementById("crop-details-section").style.display = "none";
+        }
+
+        // Add a "Back" button to the crop details section
+        const backButton = document.createElement("button");
+        backButton.textContent = "Back";
+        backButton.style.marginTop = "10px";
+        backButton.onclick = goBackToForecast;
+        document.getElementById("crop-details").appendChild(backButton);
+        // Add a "Back" button to the crop details section dynamically
+        document.addEventListener("DOMContentLoaded", () => {
+            const cropDetailsSection = document.getElementById("crop-details-section");
+            const backButton = document.createElement("button");
+            backButton.textContent = "Back";
+            backButton.style.marginTop = "10px";
+            backButton.onclick = goBackToForecast;
+            cropDetailsSection.appendChild(backButton);
+        });
+      
+        
+        // Modify the crop item to show details on click
+        function showForecast() {
+            const month = document.getElementById("month").value;
+            const district = document.getElementById("district").value;
+
+            if (!month || !district) {
+                alert("Please select both month and district.");
+                return;
+            }
+
+            const cropList = document.getElementById("crop-list");
+            cropList.innerHTML = "";
+
+            const cachedDemands = getCachedDemand(month, district);
+
+            crops.forEach((crop, index) => {
+                crop.demand = cachedDemands[index];
+                const cropItem = document.createElement("div");
+                cropItem.className = "crop-item";
+                cropItem.innerHTML = `
+                    <img src="${crop.image}" alt="${crop.name}">
+                    <div class="crop-details">
+                        <h3>${crop.name}</h3>
+                        <p>Demand: ${crop.demand}</p>
+                    </div>
+                `;
+                cropItem.onclick = () => showCropDetails(index); // Show details on click
+                cropList.appendChild(cropItem);
+            });
+
+            document.getElementById("forecast-section").style.display = "block";
+            document.getElementById("crop-details-section").style.display = "none";
+        }
+    </script>
+</body>
+</html>
